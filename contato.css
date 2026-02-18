@@ -1,0 +1,155 @@
+/* --- CONFIGURAÇÕES GERAIS E VARIÁVEIS --- */
+:root { 
+    --verde: #004d40; 
+    --verde-escuro: #002d26;
+    --laranja: #e67e22; 
+    --bege: #fdfbf7; 
+    --texto: #2d3436;
+    --fonte-titulo: 'Montserrat', sans-serif;
+    --fonte-corpo: 'Quicksand', sans-serif;
+    --smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    --pata-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23e67e22' d='M256 160c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm-96 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm192 0c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zm-96 64c-17.7 0-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32s-14.3-32-32-32zM160 352c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64h-64c-35.3 0-64-28.7-64-64v-32z'/%3E%3C/svg%3E");
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body { 
+    font-family: var(--fonte-corpo); 
+    background-color: var(--bege); 
+    color: var(--texto); 
+    overflow-x: hidden; 
+}
+
+/* --- 1. BACKGROUND ANIMADO INFINITO --- */
+body::before {
+    content: ""; 
+    position: fixed; 
+    top: -50%; left: -50%; 
+    width: 200%; height: 200%;
+    background-image: var(--pata-svg); 
+    background-size: 120px; 
+    opacity: 0.04; 
+    z-index: -1;
+    animation: moverFundo 40s linear infinite; 
+    pointer-events: none;
+}
+
+@keyframes moverFundo {
+    from { transform: translate(0, 0); }
+    to { transform: translate(120px, 120px); }
+}
+
+/* --- 2. HEADER E MENU (TRILHA DE PATINHAS) --- */
+header {
+    position: fixed; top: 0; width: 100%; padding: 20px 8%;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(253, 251, 247, 0.85); backdrop-filter: blur(15px);
+    z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.4s var(--smooth);
+}
+
+.logo { font-family: var(--fonte-titulo); font-weight: 900; color: var(--laranja); font-size: 1.8rem; text-decoration: none; }
+
+nav a { 
+    font-family: var(--fonte-titulo); 
+    text-decoration: none; 
+    color: var(--verde); 
+    font-weight: 700; 
+    font-size: 0.85rem; 
+    margin-left: 35px; 
+    text-transform: uppercase; 
+    position: relative;
+    padding: 8px 0;
+    transition: color 0.3s ease;
+}
+
+nav a::before, nav a::after {
+    content: '';
+    position: absolute;
+    width: 14px; height: 14px;
+    background-image: var(--pata-svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s var(--smooth);
+}
+
+nav a::before { left: -20px; top: 50%; transform: translateY(10px) rotate(-20deg); }
+nav a::after { right: -20px; top: 20%; transform: translateY(10px) rotate(20deg); transition-delay: 0.1s; }
+
+nav a:hover { color: var(--laranja); }
+nav a:hover::before { opacity: 0.8; transform: translateY(-50%) rotate(-10deg); }
+nav a:hover::after { opacity: 0.8; transform: translateY(-50%) rotate(10deg); }
+
+/* --- 3. HERO E BOTÕES --- */
+.hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: space-between;
+    padding: 120px 8% 80px; background: var(--verde-escuro); color: white;
+    border-bottom-left-radius: 100px; position: relative; gap: 40px;
+}
+
+.btn-hero {
+    padding: 20px 45px; border-radius: 50px; border: none;
+    font-family: var(--fonte-titulo); font-weight: 800; text-transform: uppercase;
+    color: white; cursor: pointer; text-decoration: none; display: inline-block; 
+    background: linear-gradient(45deg, #e67e22, #f39c12);
+    transition: 0.4s var(--smooth); box-shadow: 0 10px 20px rgba(230, 126, 34, 0.3);
+}
+
+.btn-hero:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(230, 126, 34, 0.5); }
+
+/* --- 4. CARDS DE PETS --- */
+.card {
+    background: white; border-radius: 45px; padding: 25px;
+    transition: 0.4s var(--smooth); border: 1px solid rgba(0,0,0,0.03);
+}
+
+.card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
+
+.card img { width: 100%; height: 280px; object-fit: cover; border-radius: 35px; margin-bottom: 20px; }
+
+/* --- 5. RODAPÉ E INSTAGRAM --- */
+footer { 
+    background: var(--verde-escuro); color: white; padding: 60px 8% 40px; 
+    text-align: center; border-top-right-radius: 100px; 
+}
+
+.social-links { margin: 25px 0; display: flex; justify-content: center; gap: 20px; }
+
+.social-btn {
+    width: 60px; height: 60px; border-radius: 50%; 
+    background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    transition: 0.4s var(--smooth);
+}
+
+.social-btn svg { width: 28px; height: 28px; fill: white; }
+
+.social-btn.insta:hover { 
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    transform: translateY(-8px) rotate(10deg);
+}
+
+.social-btn.whats:hover { 
+    background: #25D366; 
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Animação do WhatsApp */
+.social-btn.whats { animation: pulsarWhats 2s infinite; }
+
+@keyframes pulsarWhats {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* --- 6. RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .hero { flex-direction: column; text-align: center; }
+    nav { display: none; }
+    .stats-bar { flex-direction: column; gap: 20px; }
+}

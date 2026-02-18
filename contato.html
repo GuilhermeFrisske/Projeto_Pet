@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato | Patinhas Premium</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root { 
+            --verde: #1b4332; 
+            --laranja: #ff8c42; 
+            --creme: #fffaf5; 
+            --branco: #ffffff;
+            --smooth: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background-color: var(--creme);
+            color: var(--verde);
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMAÇÕES --- */
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-5px, -10px) rotate(2deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- LAYOUT --- */
+        header {
+            padding: 30px 8%;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+
+        .logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.8rem; color: var(--verde); text-decoration: none; }
+        .logo span { color: var(--laranja); }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 8% 100px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        /* --- SLIDER DE FOTOS COM SETAS --- */
+        .photo-slider {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+
+        .main-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 60px 150px 60px 100px;
+            box-shadow: 30px 30px 0 var(--laranja);
+            transition: 0.5s var(--smooth);
+        }
+
+        /* Setas de Navegação */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--branco);
+            color: var(--verde);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border: none;
+            transition: 0.3s;
+            z-index: 5;
+        }
+
+        .nav-arrow:hover {
+            background: var(--laranja);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .arrow-left { left: -25px; }
+        .arrow-right { right: -5px; }
+
+        .floating-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: var(--branco);
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: float 5s infinite ease-in-out;
+            z-index: 6;
+        }
+
+        .floating-badge img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+
+        /* --- FORMULÁRIO --- */
+        .contact-card {
+            background: var(--branco);
+            padding: 50px;
+            border-radius: 40px;
+            box-shadow: 0 40px 80px rgba(27, 67, 50, 0.08);
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 18px 25px;
+            border: 2px solid #f0f0f0; border-radius: 20px;
+            font-family: inherit; background: #fafafa; transition: 0.3s;
+        }
+        .form-group input:focus { border-color: var(--laranja); outline: none; }
+
+        .btn-submit {
+            width: 100%; background: var(--verde); color: white;
+            border: none; padding: 20px; border-radius: 20px;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer;
+            transition: 0.4s; display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .btn-submit:hover { background: var(--laranja); transform: translateY(-5px); }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .nav-arrow { width: 40px; height: 40px; }
+            .arrow-left { left: 10px; }
+            .arrow-right { right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">Patinhas<span>.</span></a>
+        <nav><a href="index.html" style="text-decoration: none; color: var(--verde); font-weight: 700;">Home</a></nav>
+    </header>
+
+    <main class="container">
+        <section class="photo-slider">
+            <button class="nav-arrow arrow-left" onclick="changePhoto(-1)">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            
+            <img id="pet-photo" src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80" alt="Pet Feliz" class="main-photo">
+            
+            <button class="nav-arrow arrow-right" onclick="changePhoto(1)">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <div class="floating-badge">
+                <img id="badge-img" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=150&q=80" alt="Mini Pet">
+                <div>
+                    <p id="badge-text" style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0;">Luna mandou um miau!</p>
+                    <small style="color: var(--laranja);">Acabou de ser adotada</small>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <form class="contact-card">
+                <h2 style="margin-bottom: 10px;">Vamos conversar ?</h2>
+                <p style="margin-bottom: 30px; color: #666;">Nossa equipe de humanos responderá você rapidinho.</p>
+
+                <div class="form-group"><input type="text" placeholder="Qual o seu nome?" required></div>
+                <div class="form-group"><input type="email" placeholder="Seu melhor e-mail" required></div>
+                <div class="form-group"><textarea rows="4" placeholder="No que podemos ajudar seu pet?"></textarea></div>
+
+                <button type="submit" class="btn-submit">Enviar Mensagem <i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Banco de dados de fotos e textos
+        const pets = [
+            {
+                main: "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80",
+                badge: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=150&q=80",
+                text: "Luna mandou um miau!"
+            },
+            {
+                main: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=800&q=80",
+                badge: "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=150&q=80",
+                text: "Bento quer brincar!"
+            },
+            {
+                main: "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=800&q=80",
+                badge: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=150&q=80",
+                text: "Pipoca está te esperando!"
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function changePhoto(direction) {
+            const photoEl = document.getElementById('pet-photo');
+            const badgeImg = document.getElementById('badge-img');
+            const badgeText = document.getElementById('badge-text');
+
+            // Atualiza o índice
+            currentIndex += direction;
+            if (currentIndex >= pets.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = pets.length - 1;
+
+            // Aplica efeito de fade
+            photoEl.style.opacity = '0';
+            
+            setTimeout(() => {
+                photoEl.src = pets[currentIndex].main;
+                badgeImg.src = pets[currentIndex].badge;
+                badgeText.innerText = pets[currentIndex].text;
+                photoEl.style.opacity = '1';
+            }, 300);
+        }
+    </script>
+</body>
+</html>
